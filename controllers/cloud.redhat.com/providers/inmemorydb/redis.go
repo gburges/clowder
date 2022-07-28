@@ -10,7 +10,6 @@ import (
 
 	apps "k8s.io/api/apps/v1"
 	core "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	rc "github.com/RedHatInsights/rhc-osdk-utils/resourceCache"
@@ -94,11 +93,12 @@ func makeLocalRedis(o obj.ClowdObject, objMap providers.ObjectMap, _ bool, nodeP
 
 	labels := o.GetLabels()
 	labels["env-app"] = nn.Name
+	labels["service"] = "redis"
 	labeler := utils.MakeLabeler(nn, labels, o)
 
 	labeler(dd)
 
-	dd.Spec.Selector = &metav1.LabelSelector{MatchLabels: labels}
+	// dd.Spec.Selector = &metav1.LabelSelector{MatchLabels: labels}
 	dd.Spec.Template.ObjectMeta.Labels = labels
 	dd.Spec.Replicas = &oneReplica
 

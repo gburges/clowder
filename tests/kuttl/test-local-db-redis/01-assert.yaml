@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-a-db
+  namespace: test-local-db-redis
+spec:
+  template:
+    spec:
+      metadata:
+        labels:
+          service: redis
+      containers:
+        - image: quay.io/cloudservices/redis:3.2.3-alpine
+          resources:
+            limits:
+              cpu: 1800m
+              memory: 2Gi
+            requests:
+              cpu: 1200m
+              memory: 1Gi
